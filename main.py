@@ -9,7 +9,7 @@ from image_process import median_cut, kmeans_extraction
 def main_page():
     st.title("# Find the color palette")
 
-    sample_image = Image.open("./sample_image/sample0.png")
+    sample_image = Image.open("./sample_image/sample1.png")
     image_area = st.image(sample_image)
 
     df = find_color(sample_image, 10)
@@ -30,7 +30,7 @@ def main_page():
                                            min_value=3, max_value=10)
         selected_method = st.selectbox(
             "How would you like to extract the color palette?",
-            ("None", "Median cut", "K-Means"),
+            ("Top N", "Median cut", "K-Means"),
             index=None,
             placeholder="Select extracting method...",
         )
