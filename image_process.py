@@ -1,5 +1,6 @@
 from PIL import Image
 import numpy as np
+from sklearn.cluster import KMeans
 
 
 def median_cut(image, num_colors):
@@ -32,12 +33,26 @@ def median_cut(image, num_colors):
     # return Image.fromarray(palette_image)
 
 
+def kmeans_extraction(image, num_colors):
+    pixels = np.array(image)
+    original_shape = tuple(pixels.shape)
+    pixels = pixels.reshape(-1, 3)
+
+    model = KMeans(n_clusters=num_colors, n_init="auto", init="k-means++")
+    model.fit_predict(pixels)
+    palette = np.array(model.cluster_centers_, dtype=int)
+    # print(palette)
+
+    return palette
+
+
 if __name__ == '__main__':
-    image_path = "./sample_image/sample3.png"
+    image_path = "./sample_image/sample2.png"
     image = Image.open(image_path)
 
-    num_colors = 5
-    processed_image = median_cut(image, num_colors)
+    num_colors = 10
+    # processed_image = median_cut(image, num_colors)
+    processed_image = kmeans_extraction(image, num_colors)
 
     color_palette_image = np.zeros((100, 100 * num_colors, 3), dtype=np.uint8)
     for i, color in enumerate(processed_image):

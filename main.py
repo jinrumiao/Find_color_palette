@@ -3,7 +3,7 @@ import numpy as np
 import pandas as pd
 from PIL import Image
 
-from image_process import median_cut
+from image_process import median_cut, kmeans_extraction
 
 
 def main_page():
@@ -84,7 +84,18 @@ def find_color(image_file, number_of_colors, method=None):
         return df
 
     if method == "K-Means":
-        st.write("K-Means")
+        kmeans_result = kmeans_extraction(image_file, number_of_colors)
+
+        kmeans_hex = [rgb2hex(tuple(rgb)) for rgb in kmeans_result]
+
+        hex_dict = dict(sorted_hex)
+
+        find_frequency = {hex_code: hex_dict[hex_code] for hex_code in kmeans_hex}
+        find_frequency = dict(sorted(find_frequency.items(), key=lambda x: x[1])[::-1])
+
+        df = formatted_df(find_frequency, total_pixels)
+
+        return df
 
 
 def count_hex(image_array):
@@ -137,7 +148,6 @@ def empty_df():
             'Percentage (%)': []
         }
     )
-
 
 
 # Press the green button in the gutter to run the script.
