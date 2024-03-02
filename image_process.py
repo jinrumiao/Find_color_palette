@@ -33,10 +33,10 @@ def median_cut(image, num_colors):
 
 
 if __name__ == '__main__':
-    image_path = "./sample_image/sample4.png"
+    image_path = "./sample_image/sample3.png"
     image = Image.open(image_path)
 
-    num_colors = 6
+    num_colors = 5
     processed_image = median_cut(image, num_colors)
 
     color_palette_image = np.zeros((100, 100 * num_colors, 3), dtype=np.uint8)
