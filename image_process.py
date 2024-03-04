@@ -1,6 +1,7 @@
 from PIL import Image
 import numpy as np
 from sklearn.cluster import KMeans
+from sklearn.metrics import pairwise_distances_argmin_min
 
 
 def median_cut(image, num_colors):
@@ -40,8 +41,12 @@ def kmeans_extraction(image, num_colors):
 
     model = KMeans(n_clusters=num_colors, n_init="auto", init="k-means++")
     model.fit_predict(pixels)
-    palette = np.array(model.cluster_centers_, dtype=int)
+    closest_pixels, _ = pairwise_distances_argmin_min(model.cluster_centers_, pixels)
     # print(palette)
+
+    palette = []
+    for index in closest_pixels:
+        palette.append(pixels[index])
 
     return palette
 
@@ -53,6 +58,7 @@ if __name__ == '__main__':
     num_colors = 10
     # processed_image = median_cut(image, num_colors)
     processed_image = kmeans_extraction(image, num_colors)
+    print(processed_image)
 
     color_palette_image = np.zeros((100, 100 * num_colors, 3), dtype=np.uint8)
     for i, color in enumerate(processed_image):

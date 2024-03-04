@@ -56,6 +56,10 @@ def main_page():
 
 
 def find_color(image_file, number_of_colors, method=None):
+    width, height = image_file.size
+    if width > 1000 or height > 1000:
+        image_file = image_file.resize((500, int(height/width*500)))
+
     image_array = np.array(image_file)
 
     total_pixels = image_array.shape[0] * image_array.shape[1]
