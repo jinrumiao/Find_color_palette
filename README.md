@@ -25,6 +25,7 @@ I learned about the median cut algorithm and K-means algorithm and applied them 
 
 ## 🛠️Improvement
 ☑️**Passing by URL**: Users have the option to extract a color palette by pasting a URL.
+
 ☑️**More Features**: Expanding the functionality to include features such as image resizing and changing color palettes.
 
 ## 🏃‍♂️Running the Project
